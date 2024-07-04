@@ -1,1 +1,6 @@
 MODULE Main;
+REQUIRE User, Tutor, Student, Lesson, Course, Subject;
+
+
+
+

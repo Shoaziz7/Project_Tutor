@@ -1,0 +1,5 @@
+MODULE Student;
+
+CLASS Student 'Ученик';
+fullname 'ФИО' = DATA BPSTRING[100] (Student) IN base;
+age 'Возраст' = DATA INTEGER (Student) IN base;
