@@ -1,0 +1,25 @@
+MODULE Tutor;
+
+CLASS User 'Пользователь';
+name 'Имя' = DATA STRING[100] (User) IN base;
+phoneNumber 'Номер телефона' = DATA BPISTRING[20] (User) IN base;
+
+CLASS Tutor 'Репетитор';
+fullname 'ФИО' = DATA STRING[100] (Tutor) IN base;
+subject 'Предмет' = DATA BPISTRING[50] (Tutor) IN base;
+
+CLASS Student 'Ученик';
+fullname 'ФИО' = DATA BPSTRING[100] (Student) IN base;
+age 'Возраст' = DATA INTEGER (Student) IN base;
+
+CLASS Lesson 'Урок';
+topic 'Тема' = DATA BPSTRING[50] (Lesson) IN base;
+dateTime 'Дата-время' = DATA DATETIME (Lesson) IN base;
+subject 'Предмет' = DATA BPSTRING[50] (Lesson) IN base;
+tutor 'Репетитор' = DATA STRING[100] (Lesson) IN base;
+
+CLASS Course 'Курс';
+subject 'Предмет' = DATA BPSTRING[50] (Course) IN base;
+
+CLASS Subject 'Предмет';
+name 'Название' = DATA BPSTRING[50] (Subject) IN base;
