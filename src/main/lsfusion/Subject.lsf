@@ -2,3 +2,7 @@ MODULE Subject;
 
 CLASS Subject 'Предмет';
 name 'Название' = DATA BPSTRING[50] (Subject) IN base;
+
+FORM subjets 'Предметы'
+    OBJECTS s = Subject
+    PROPERTIES(s) name, NEW, DELETE;

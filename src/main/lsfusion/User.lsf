@@ -3,3 +3,8 @@ MODULE User;
 CLASS User 'Пользователь';
 name 'Имя' = DATA STRING[100] (User) IN base;
 phoneNumber 'Номер телефона' = DATA BPISTRING[20] (User) IN base;
+
+FORM users 'Пользователи'
+    OBJECTS u = User
+    PROPERTIES(u) name, phoneNumber, NEW, DELETE;
+    

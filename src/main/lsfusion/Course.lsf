@@ -3,3 +3,6 @@ MODULE Course;
 CLASS Course 'Курс';
 subject 'Предмет' = DATA BPSTRING[50] (Course) IN base;
 
+FORM courses 'Курсы'
+    OBJECTS c = Course
+    PROPERTIES(c) subject, NEW, DELETE;

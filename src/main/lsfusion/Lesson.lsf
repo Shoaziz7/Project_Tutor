@@ -5,3 +5,7 @@ topic 'Тема' = DATA BPSTRING[50] (Lesson) IN base;
 dateTime 'Дата-время' = DATA DATETIME (Lesson) IN base;
 subject 'Предмет' = DATA BPSTRING[50] (Lesson) IN base;
 tutor 'Репетитор' = DATA STRING[100] (Lesson) IN base;
+
+FORM lessons 'Уроки'
+    OBJECTS l = Lesson
+    PROPERTIES(l) topic, dateTime, subject, tutor, NEW, DELETE;
