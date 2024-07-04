@@ -1,6 +1,5 @@
 MODULE Tutor;
 
-//
 CLASS User 'Пользователь';
 name 'Имя' = DATA STRING[100] (User) IN base;
 phoneNumber 'Номер телефона' = DATA BPISTRING[20] (User) IN base;
