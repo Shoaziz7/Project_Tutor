@@ -1,7 +1,16 @@
 MODULE Lesson;
+REQUIRE Tutor, Subject;
 
 CLASS Lesson 'Урок';
-topic 'Тема' = DATA BPSTRING[50] (Lesson) IN base;
-dateTime 'Дата-время' = DATA DATETIME (Lesson) IN base;
-subject 'Предмет' = DATA BPSTRING[50] (Lesson) IN base;
-tutor 'Репетитор' = DATA STRING[100] (Lesson) IN base;
+topic 'Тема' = DATA STRING[50] (Lesson);
+dateTime 'Дата-время' = DATA DATETIME (Lesson);
+
+subject 'Предмет' = DATA Subject (Lesson);
+nameSubject 'Предмет' (Lesson l) = name(subject(l));
+tutor 'Репетитор' = DATA Tutor (Lesson);
+nameTutor 'Репетитор' (Lesson l) = fullname(tutor(l));
+
+
+FORM lessons 'Уроки'
+    OBJECTS l = Lesson
+    PROPERTIES(l) topic, dateTime, nameSubject, nameTutor, NEW, DELETE;

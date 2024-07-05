@@ -1,5 +1,16 @@
 MODULE Student;
+REQUIRE User, Tutor;
 
 CLASS Student 'Ученик';
-fullname 'ФИО' = DATA BPSTRING[100] (Student) IN base;
-age 'Возраст' = DATA INTEGER (Student) IN base;
+fullname 'ФИО' = DATA STRING[100] (Student);
+age 'Возраст' = DATA INTEGER (Student);
+phoneNumber 'Номер телефона' = DATA STRING[20] (Student);
+
+owner = DATA User (Student);
+nameOwner 'Имя' (Student s) = name(owner(s));
+
+FORM students 'Ученики'
+    OBJECTS s = Student
+    PROPERTIES(s) nameOwner, age, NEW, DELETE;
+
+

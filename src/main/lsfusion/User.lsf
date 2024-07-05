@@ -1,5 +1,24 @@
 MODULE User;
 
 CLASS User 'Пользователь';
-name 'Имя' = DATA STRING[100] (User) IN base;
-phoneNumber 'Номер телефона' = DATA BPISTRING[20] (User) IN base;
+name 'Имя Пользователя' = DATA STRING[100] (User);
+phoneNumber 'Номер телефона' = DATA STRING[20] (User);
+
+// To avoid empty box
+is(User s) = s IS User;
+is(User s) => name(s);
+is(User s) => phoneNumber(s);
+
+
+// To avoid repetition
+name = GROUP AGGR User u BY name(u);
+phoneNumber = GROUP AGGR User u BY phoneNumber(u);
+
+
+
+FORM users 'Пользователи'
+    OBJECTS u = User
+    PROPERTIES(u) name , phoneNumber, NEW, DELETE;
+
+
+  

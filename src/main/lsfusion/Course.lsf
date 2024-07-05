@@ -1,5 +1,19 @@
 MODULE Course;
+REQUIRE Subject, Lesson;
 
 CLASS Course 'Курс';
-subject 'Предмет' = DATA BPSTRING[50] (Course) IN base;
+subject = DATA Subject (Course);
+nameSubject 'Предмет' (Course c) = name(subject(c));
+
+
+FORM courses 'Курсы'
+    OBJECTS c = Course
+    PROPERTIES(c) nameSubject SELECTOR 
+    
+
+    OBJECTS l = Lesson
+    PROPERTIES(l) READONLY topic, dateTime, nameSubject, nameTutor 
+    FILTERS nameSubject(l) == nameSubject(c)
+;
+
 
