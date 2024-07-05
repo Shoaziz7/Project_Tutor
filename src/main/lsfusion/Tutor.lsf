@@ -1,9 +1,13 @@
 MODULE Tutor;
+REQUIRE User;
 
 CLASS Tutor 'Репетитор';
-fullname 'ФИО' = DATA STRING[100] (Tutor) IN base;
-subject 'Предмет' = DATA BPISTRING[50] (Tutor) IN base;
+fullname 'ФИО' = DATA STRING[100] (Tutor);
+phoneNumber 'Номер телефона' = DATA STRING[20] (Tutor);
+
+owner  = DATA User (Tutor);
+nameOwner 'Имя Пользователя' (Tutor t) = name(owner(t));
 
 FORM tutors 'Репетиторы'
     OBJECTS t = Tutor
-    PROPERTIES(t) fullname, subject, NEW, DELETE;
+    PROPERTIES(t) nameOwner, fullname, phoneNumber, NEW, DELETE;

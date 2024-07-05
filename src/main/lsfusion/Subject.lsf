@@ -1,8 +1,9 @@
 MODULE Subject;
 
 CLASS Subject 'Предмет';
-name 'Название' = DATA BPSTRING[50] (Subject) IN base;
+name 'Название' = DATA STRING[50] (Subject);
 
+    
 FORM subjets 'Предметы'
     OBJECTS s = Subject
     PROPERTIES(s) name, NEW, DELETE;
