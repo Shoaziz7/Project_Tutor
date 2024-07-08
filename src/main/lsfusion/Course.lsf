@@ -10,7 +10,6 @@ FORM courses 'Курсы'
     OBJECTS c = Course
     PROPERTIES(c) nameSubject SELECTOR 
     
-
     OBJECTS l = Lesson
     PROPERTIES(l) READONLY topic, dateTime, nameSubject, nameTutor 
     FILTERS nameSubject(l) == nameSubject(c)
