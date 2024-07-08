@@ -1,0 +1,26 @@
+MODULE Enrollment;
+REQUIRE Student, Lesson;
+
+CLASS enrollment 'Запись';
+student = DATA Student (enrollment);
+lesson = DATA Lesson (enrollment);
+
+
+studentEnroll = DATA LOCAL STRING[100];
+lessonEnroll = DATA LOCAL STRING[100];
+
+applyToLesson 'Запись' (FILE f) {
+    IMPORT JSON CHARSET 'utf-8' FROM f TO() studentEnroll, lessonEnroll;
+    NEW apply = enrollment {
+        student(apply) <- enrollByName(studentEnroll());
+        lesson(apply) <- enrollToSubject(lessonEnroll());
+    }
+    APPLY;
+    CASE 
+        WHEN enrollByName(studentEnroll()) == NULL THEN 
+            EXPORT JSON FROM success = NULL, msg = 'No student\'s name';
+        WHEN enrollToSubject(lessonEnroll()) == NULL THEN
+            EXPORT JSON FROM success = NULL, msg = 'Subject is not selected';
+    ELSE 
+        EXPORT JSON FROM success = TRUE, msg = 'Everything is good';
+}
