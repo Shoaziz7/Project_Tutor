@@ -18,21 +18,21 @@ studentPhone = DATA LOCAL STRING[20];
 
 addStudent 'Добавить ученика' (FILE f) {
     IMPORT JSON CHARSET 'utf-8' FROM f TO() studentName, studentAge, studentPhone;
+    CASE 
+        WHEN NOT studentName() THEN
+            EXPORT JSON FROM success = NULL, msg = 'No student name';
+        WHEN NOT studentAge() THEN
+            EXPORT JSON FROM success = NULL, msg = 'No student age';
+        WHEN NOT studentPhone() THEN
+            EXPORT JSON FROM success = NULL, msg = 'No student phone number';
+    ELSE
+        EXPORT JSON FROM success = TRUE, msg = 'Everything is good';
     NEW newStudent = Student {
         fullname(newStudent) <- studentName();
         age(newStudent) <- studentAge();
         phoneNumber(newStudent) <- studentPhone();
     }
     APPLY;
-    CASE 
-        WHEN studentName() == NULL THEN
-            EXPORT JSON FROM success = NULL, msg = 'No student name';
-        WHEN studentAge() == NULL THEN
-            EXPORT JSON FROM success = NULL, msg = 'No student age';
-        WHEN studentPhone() == NULL THEN
-            EXPORT JSON FROM success = NULL, msg = 'No student phone number';
-    ELSE
-        EXPORT JSON FROM success = TRUE, msg = 'Everything is good';
 }
 
 

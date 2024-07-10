@@ -19,6 +19,17 @@ lessonTutor = DATA LOCAL STRING[100];
 
 addLesson 'Добавить урок' (FILE f) {
     IMPORT JSON CHARSET 'utf-8' FROM f TO() lessonTopic, lessonDateTime, lessonSubject, lessonTutor;
+    CASE 
+        WHEN NOT lessonTopic() THEN 
+            EXPORT JSON FROM success = NULL, msg = 'No topic';
+        WHEN NOT lessonDateTime() THEN
+            EXPORT JSON FROM success = NULL, msg = 'No date-time';
+        WHEN NOT subjectByName(lessonSubject()) THEN
+            EXPORT JSON FROM success = NULL, msg = 'No subject';
+        WHEN NOT tutorByPhone(lessonTutor()) THEN
+            EXPORT JSON FROM success = NULL, msg = 'No tutor';
+    ELSE
+        EXPORT JSON FROM success = TRUE , msg = 'Everything is good';
     NEW newLesson = Lesson {
         topic(newLesson) <- lessonTopic();
         dateTime(newLesson) <- lessonDateTime();
@@ -26,17 +37,6 @@ addLesson 'Добавить урок' (FILE f) {
         tutor(newLesson) <- tutorByPhone(lessonTutor());
     }
     APPLY;
-    CASE 
-        WHEN lessonTopic() == NULL THEN 
-            EXPORT JSON FROM success = NULL, msg = 'No topic';
-        WHEN lessonDateTime() == NULL THEN
-            EXPORT JSON FROM success = NULL, msg = 'No date-time';
-        WHEN subjectByName(lessonSubject()) == NULL THEN
-            EXPORT JSON FROM success = NULL, msg = 'No subject';
-        WHEN tutorByPhone(lessonTutor()) == NULL THEN
-            EXPORT JSON FROM success = NULL, msg = 'No tutor';
-    ELSE
-        EXPORT JSON FROM success = TRUE , msg = 'Everything is good';
 }
 
 
