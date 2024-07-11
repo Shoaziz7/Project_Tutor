@@ -16,18 +16,20 @@ tutorPhone = DATA LOCAL STRING[20];
 
 addTutor 'Добавить репетитора' (FILE f) {
     IMPORT JSON CHARSET 'utf-8' FROM f TO() tutorName, tutorPhone;
-    CASE
-        WHEN NOT tutorName() THEN 
-            EXPORT JSON FROM success = NULL, msg = 'No tutor\'s name';
-        WHEN NOT tutorPhone() THEN 
+    IF NOT tutorName() THEN 
+        EXPORT JSON FROM success = NULL, msg = 'No tutor\'s name';
+    IF NOT tutorName() THEN BREAK;
+    
+    IF NOT tutorPhone() THEN
             EXPORT JSON FROM success = NULL, msg = 'No tutor\'s phone';
-    ELSE 
-        EXPORT JSON FROM success = TRUE, msg = 'Everything is good';
+    IF NOT tutorPhone() THEN BREAK;
+    
     NEW newTutor = Tutor {
         fullname(newTutor) <- tutorName();
         phoneNumber(newTutor) <- tutorPhone();
     }
     APPLY;
+    EXPORT JSON FROM success = TRUE, msg = 'Tutor was added';
 }
 
 

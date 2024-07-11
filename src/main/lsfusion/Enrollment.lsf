@@ -11,16 +11,18 @@ lessonEnroll = DATA LOCAL STRING[100];
 
 applyToLesson 'Запись' (FILE f) {
     IMPORT JSON CHARSET 'utf-8' FROM f TO() studentEnroll, lessonEnroll;
-    CASE 
-        WHEN NOT enrollByName(studentEnroll()) THEN 
+    IF NOT enrollByName(studentEnroll()) THEN 
             EXPORT JSON FROM success = NULL, msg = 'No student\'s name';
-        WHEN NOT enrollToSubject(lessonEnroll()) THEN
+    IF NOT enrollByName(studentEnroll()) THEN BREAK;
+    
+    IF NOT enrollToSubject(lessonEnroll()) THEN
             EXPORT JSON FROM success = NULL, msg = 'Subject is not selected';
-    ELSE 
-        EXPORT JSON FROM success = TRUE, msg = 'Everything is good';
+    IF NOT enrollToSubject(lessonEnroll()) THEN BREAK;
+    
     NEW apply = enrollment {
         student(apply) <- enrollByName(studentEnroll());
         lesson(apply) <- enrollToSubject(lessonEnroll());
     }
     APPLY;
+    EXPORT JSON FROM success = TRUE, msg = 'You successfully applied to lesson';
 }
