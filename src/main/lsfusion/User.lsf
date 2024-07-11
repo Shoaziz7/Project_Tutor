@@ -20,18 +20,20 @@ phone = DATA LOCAL STRING[50];
 
 addUser 'Добавить пользователя' (FILE f) {
     IMPORT JSON CHARSET 'utf-8' FROM f TO() username, phone;
-    CASE
-        WHEN NOT username() THEN 
-            EXPORT JSON FROM success = NULL, msg = 'No username';
-        WHEN NOT phone() THEN
-            EXPORT JSON FROM success = NULL, msg = 'No phonenumber';
-    ELSE
-        EXPORT JSON FROM success = TRUE, msg = 'Everything is good';
+    IF NOT username() THEN
+            EXPORT JSON FROM success = NULL, msg = 'No username'; 
+    IF NOT username() THEN BREAK;
+    
+    IF NOT phone() THEN     
+        EXPORT JSON FROM success = NULL, msg = 'No phonenumber';
+    IF NOT phone() THEN BREAK;
+
     NEW newUser = User {
         name(newUser) <- username();
         phoneNumber(newUser) <- phone();
     }
     APPLY;
+    EXPORT JSON FROM success = TRUE, msg = 'User was created';
 }
 
 
